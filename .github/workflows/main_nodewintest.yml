@@ -35,16 +35,16 @@ jobs:
           dir
           popd
 
-      - name: Zip contents for upload
-        shell: powershell
-        run: |
-          Compress-Archive -Path . -DestinationPath release.zip
+      #- name: Zip contents for upload
+      #  shell: powershell
+      #  run: |
+      #    Compress-Archive -Path . -DestinationPath release.zip
         
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: node-app
-          path: release.zip
+          path: ./
 
   deploy:
     runs-on: windows-latest
@@ -65,5 +65,5 @@ jobs:
         with:
           app-name: 'NodeWinTest'
           slot-name: 'Production'
-          package: release.zip
+          package: ./
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_35FA8D50EB7640F7B81139F5950D53BB }}
