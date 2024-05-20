@@ -35,8 +35,10 @@ jobs:
           dir
           popd
 
-      - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+      - name: Zip contents for upload
+        shell: powershell
+        run: |
+          Compress-Archive -Path . -DestinationPath release.zip
         
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
