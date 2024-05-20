@@ -65,5 +65,5 @@ jobs:
         with:
           app-name: 'NodeWinTest'
           slot-name: 'Production'
-          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+          package: release.zip
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_35FA8D50EB7640F7B81139F5950D53BB }}
