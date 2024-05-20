@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_FUNCTIONAPP_NAME: "my-app"
+  AZURE_FUNCTIONAPP_NAME: "NodeWinTest"
   AZURE_FUNCTIONAPP_PACKAGE_PATH: "./release.zip"
   NODE_VERSION: "20.x"
 
@@ -53,10 +53,10 @@ jobs:
           name: function-app
 
       - name: "Deploy to Azure Web App"
-        id: deploy-to-webapp
+        id: fa
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
           slot-name: "production"
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4C5E5D1A1AA045C3BE9A64159A384FF4 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_49E9E1498BF746DCA8EB714BEBCC336B }}
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
