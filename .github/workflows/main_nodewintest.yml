@@ -14,7 +14,7 @@ env:
   NODE_VERSION: '20.x' # set this to the node version to use (supports 8.x, 10.x, 12.x)
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: windows-latest
     steps:
       - name: 'Checkout GitHub Action'
@@ -34,11 +34,30 @@ jobs:
           npm run test --if-present
           popd
 
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: node-app
+          path: .
+
+  deploy:
+    runs-on: windows-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: node-app
+      
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
         id: fa
         with:
           app-name: 'NodeWinTest'
           slot-name: 'Production'
-          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/build
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8E59C5CDF9D64932B86DE84710D5CCC1 }}
+          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4C5E5D1A1AA045C3BE9A64159A384FF4 }}
