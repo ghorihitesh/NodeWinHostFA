@@ -3,7 +3,7 @@ name: Develop branch CI/CD Pipeline - Building and Deploy API as ZIP to Azure (m
 on:
   push:
     branches:
-      - develop
+      - main
   workflow_dispatch:
 
 env:
